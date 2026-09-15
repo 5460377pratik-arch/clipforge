@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* =============================================
+   CLIPFORGE — UNIFIED DESIGN SYSTEM
+   ============================================= */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --bg:          #07070A;
+  --bg-surface:  #0D0D12;
+  --bg-raised:   #131318;
+  --border:      rgba(255,255,255,0.07);
+  --border-h:    rgba(255,255,255,0.13);
+  --text:        #F5F5F7;
+  --text-2:      rgba(255,255,255,0.60);
+  --text-3:      rgba(255,255,255,0.38);
+  --accent:      #7C3AED;
+  --accent-mid:  #6366F1;
+  --accent-blue: #3B82F6;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 3px; }
+
+/* ---- Typography utilities ---- */
+.gradient-text {
+  background: linear-gradient(135deg, #A78BFA 0%, #818CF8 45%, #60A5FA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Surface / glass utilities ---- */
+.glass {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.surface {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* ---- Accent gradient button ---- */
+.btn-accent {
+  background: linear-gradient(135deg, #7C3AED 0%, #6366F1 50%, #3B82F6 100%);
+  background-size: 200% 100%;
+  transition: background-position 200ms ease, transform 150ms ease, box-shadow 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+
+.btn-accent:hover {
+  background-position: 100% 0;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99,102,241,0.28);
+}
+
+.btn-accent:active { transform: translateY(0); }
+
+/* ---- Focus ring ---- */
+:focus-visible {
+  outline: 2px solid rgba(99,102,241,0.55);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Subtle dot grid ---- */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ---- Keyframes ---- */
+@keyframes cf-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cf-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cf-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes cf-shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0;  }
+}
+
+@keyframes cf-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+/* ---- Animation classes ---- */
+.animate-fade-up  { animation: cf-fade-up  0.5s ease both; }
+.animate-fade-in  { animation: cf-fade-in  0.4s ease both; }
+.animate-pulse-soft { animation: cf-pulse  2s ease-in-out infinite; }
+.animate-float    { animation: cf-float    4s ease-in-out infinite; }
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: cf-shimmer 2.5s linear infinite;
+}
+
+/* ---- Delay helpers ---- */
+.delay-75  { animation-delay: 75ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
